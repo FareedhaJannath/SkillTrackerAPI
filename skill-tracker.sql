@@ -70,8 +70,9 @@ select * from skills
 
 --commit
 
---delete from associate where associate_id=116
-
+ delete from associate where associate_id>639
+ 
+  delete from associate_skills where associate_id>639   
 
 SELECT a.gender, count(DISTINCT a.associate_id) from associate  a 
 LEFT OUTER JOIN associate_skills ask ON a.associate_id = ask.associate_id 
