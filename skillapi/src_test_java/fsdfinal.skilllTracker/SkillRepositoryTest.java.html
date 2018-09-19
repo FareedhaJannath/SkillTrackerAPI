@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SkillRepositoryTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Sep 19, 2018 1:05:41 PM)</a> &gt; <a href="../../index.html" class="el_group">skillapi</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">fsdfinal.skilllTracker</a> &gt; <span class="el_source">SkillRepositoryTest.java</span></div><h1>SkillRepositoryTest.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package fsdfinal.skilllTracker;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import com.fsdfinal.skillapi.dao.SkillsDAOImpl;
+import com.fsdfinal.skillapi.dao.SkillsRepository;
+import com.fsdfinal.skillapi.valueobject.Skills;
+
+/**
+ * @author Fareedha
+ *
+ */
+@RunWith(MockitoJUnitRunner.class)
+<span class="fc" id="L30">public class SkillRepositoryTest {	</span>
+   
+	
+	@Mock
+	private SkillsRepository skillRepositoryMock;
+	
+	@InjectMocks
+    private SkillsDAOImpl skillDAOMock;
+    
+	
+	 @Before
+    public void init(){
+<span class="fc" id="L42">        MockitoAnnotations.initMocks(this);</span>
+        
+<span class="fc" id="L44">    }</span>
+
+	@Test
+	public void test_get_Skills() throws Exception 
+	{
+		 
+<span class="fc" id="L50">		List&lt;Skills&gt; Skills = Arrays.asList(</span>
+<span class="fc" id="L51">	            new Skills(1, &quot;Core Java&quot;,false),</span>
+<span class="fc" id="L52">	            new Skills(2, &quot;J2EE&quot;,false)); </span>
+
+<span class="fc" id="L54">		when(skillRepositoryMock.findAll()).thenReturn(Skills);</span>
+		
+<span class="fc" id="L56">		List&lt;Skills&gt; returnSkills = skillDAOMock.getSkills();</span>
+		
+<span class="fc" id="L58">		assertNotNull(returnSkills);</span>
+		 
+
+<span class="fc" id="L61">	}</span>
+	 
+	@Test
+	public void test_get_Skills_by_id() throws Exception 
+	{
+		 
+<span class="fc" id="L67">		List&lt;Skills&gt; Skills = Arrays.asList(</span>
+<span class="fc" id="L68">	            new Skills(1, &quot;Core Java&quot;,false),</span>
+<span class="fc" id="L69">	            new Skills(2, &quot;J2EE&quot;,false));</span>
+
+<span class="fc" id="L71">		when(skillRepositoryMock.findBySkillId(2)).thenReturn(Skills.get(1));</span>
+		
+<span class="fc" id="L73">		Skills skill =skillDAOMock.getSkillById(2);</span>
+		
+<span class="fc" id="L75">		assertNotNull(skill);</span>
+
+<span class="fc" id="L77">	}</span>
+	
+	@Test
+	public void test_add_Skill() throws Exception 
+	{
+		 
+<span class="fc" id="L83">		 Skills addSkill = new Skills();</span>
+<span class="fc" id="L84">		 addSkill.setSkillId(0);</span>
+<span class="fc" id="L85">		 addSkill.setSkillName(&quot;Angular JS 2&quot;);</span>
+		 
+<span class="fc" id="L87">		 when(skillRepositoryMock.findBySkillName(&quot;Angular JS 2&quot;)).thenReturn(null);</span>
+<span class="fc" id="L88">	 	 when(skillRepositoryMock.save(addSkill)).thenReturn(addSkill);</span>
+	 	 
+<span class="fc" id="L90">	 	 boolean success = skillDAOMock.saveSkill(addSkill);</span>
+	 	 
+<span class="fc" id="L92">	 	 assertNotNull(addSkill);</span>
+	 	 
+<span class="fc" id="L94">	 	 assertEquals(true,success);</span>
+ 
+<span class="fc" id="L96">	}</span>
+	
+	@Test
+	public void test_update_Skill() throws Exception 
+	{
+		 
+<span class="fc" id="L102">		 Skills updateSkill = new Skills();</span>
+<span class="fc" id="L103">		 updateSkill.setSkillId(1);</span>
+<span class="fc" id="L104">		 updateSkill.setSkillName(&quot;Angular JS 2&quot;);</span>
+		 
+<span class="fc" id="L106">	 	 when(skillRepositoryMock.findBySkillId(1)).thenReturn(updateSkill);</span>
+<span class="fc" id="L107">	 	 when(skillRepositoryMock.save(updateSkill)).thenReturn(updateSkill);</span>
+
+<span class="fc" id="L109">         boolean success = skillDAOMock.saveSkill(updateSkill);</span>
+	 	 
+<span class="fc" id="L111">	 	 assertNotNull(updateSkill);</span>
+	 	 
+<span class="fc" id="L113">	 	 assertEquals(success,true);</span>
+<span class="fc" id="L114">	}</span>
+	@Test
+	public void test_delete_Skill() throws Exception 
+	{
+	 	 
+<span class="fc" id="L119">		 Skills skill = new Skills();</span>
+<span class="fc" id="L120">		 skill.setSkillId(1);</span>
+<span class="fc" id="L121">		 skill.setSkillName(&quot;Angular JS 2&quot;);</span>
+		 
+<span class="fc" id="L123">		 when(skillDAOMock.getSkillById(1)).thenReturn(skill);</span>
+<span class="fc" id="L124">         skillDAOMock.deleteSkill(skill);</span>
+	 	 
+<span class="fc" id="L126">	 	 assertNotNull(skill);</span>
+	 	 
+	 	  
+<span class="fc" id="L129">	} </span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span>java (Sep 19, 2018 1:05:41 PM)</div></body></html>

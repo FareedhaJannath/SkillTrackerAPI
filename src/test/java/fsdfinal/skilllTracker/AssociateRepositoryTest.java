@@ -188,4 +188,28 @@ public class AssociateRepositoryTest {
 
 		 	 
 	} 
+	
+	@Test
+	public void test_get_ratedCandites() throws Exception 
+	{
+	 
+		 
+		List<Object[]> associateSummaryList = new ArrayList<Object[]>();
+		
+		Object[] associateSummary = {
+				"M","52",
+				"F","48"
+		};
+		associateSummaryList.add(associateSummary);
+		 
+		 
+		  
+		associateSummaryList= associateRepositoryMock.getRatedCandidatesByGender();
+		  
+		 
+		 	 
+		  assertNotNull(associateSummaryList); 
+
+		 	 
+	} 
 }

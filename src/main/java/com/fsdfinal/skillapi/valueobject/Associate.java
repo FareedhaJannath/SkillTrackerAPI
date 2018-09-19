@@ -15,6 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 /**
  * @author Fareedha
  *
@@ -111,6 +116,8 @@ public class Associate implements Serializable {
 		        inverseJoinColumns = @JoinColumn(name = "skill_id")
 		    ) */
 	 @OneToMany(mappedBy="associate")
+	 @NotFound(action=NotFoundAction.IGNORE)
+	 @Cascade({CascadeType.DELETE,CascadeType.SAVE_UPDATE,CascadeType.MERGE,CascadeType.ALL})
  	 private Set<AssociateSkill> associateSkills = new HashSet<AssociateSkill>();
 	 
 	 public Associate(){};
@@ -317,6 +324,10 @@ public class Associate implements Serializable {
 	 * @param associateSkills the associateSkills to set
 	 */
 	public void setAssociateSkills(Set<AssociateSkill> associateSkills) {
+		
+		for(AssociateSkill associateSkill:associateSkills){
+			associateSkill.setAssociate(this);
+		}
 		this.associateSkills = associateSkills;
 	}
 

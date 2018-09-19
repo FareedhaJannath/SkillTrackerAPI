@@ -5,9 +5,9 @@ package com.fsdfinal.skillapi.valueobject;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author Fareedha
@@ -23,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "ASSOCIATE_SKILLS")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AssociateSkill implements Serializable {
 	
 	
@@ -40,15 +45,17 @@ public class AssociateSkill implements Serializable {
      /**
       * associate Id
       */
-	 @ManyToOne(cascade=CascadeType.ALL)
-	 @JoinColumn(name="ASSOCIATE_ID")
+	 @ManyToOne(fetch=FetchType.LAZY)
+	 @Cascade({CascadeType.ALL})
+	 @JoinColumn(name="ASSOCIATE_ID" )
 	 @JsonIgnore
      private Associate associate;
      /**
       * skill Id
       */
-	 @ManyToOne(cascade=CascadeType.ALL)
-	 @JoinColumn(name="SKILL_ID")
+	 @ManyToOne(fetch=FetchType.LAZY)
+	 @Cascade({CascadeType.SAVE_UPDATE,CascadeType.MERGE})
+	 @JoinColumn(name="SKILL_ID" )
      private Skills skill;
 	 
 	 @Column(name="skill_rating")

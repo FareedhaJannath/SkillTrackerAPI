@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AssociateDAOImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Sep 19, 2018 1:05:41 PM)</a> &gt; <a href="../../index.html" class="el_group">skillapi</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.fsdfinal.skillapi.dao</a> &gt; <span class="el_source">AssociateDAOImpl.java</span></div><h1>AssociateDAOImpl.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package com.fsdfinal.skillapi.dao;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fsdfinal.skillapi.valueobject.Associate;
+
+/**
+ * @author Fareedhaf
+ *
+ */
+
+@Transactional
+@Repository
+<span class="fc" id="L22">public class AssociateDAOImpl implements AssociateDAO {</span>
+	/**
+	 * Logger implementation for DAO Layer
+	 */
+<span class="fc" id="L26">	private static Logger log=Logger.getLogger(AssociateDAOImpl.class);</span>
+	/**
+	 * Workout Repository
+	 */
+	@Autowired
+	public AssociateRepository associateRepository;
+ 
+
+ 
+	/**
+	 * @see com.fsdfinal.skillapi.dao.AssociateDAO#getAssociates()
+	 */
+	@Override
+	public List&lt;Associate&gt; getAssociates() {
+<span class="fc" id="L40">		 log.info(&quot;Get Associate Lists&quot;);</span>
+<span class="fc" id="L41">		return associateRepository.findAll();</span>
+	}
+
+	 
+	@Override
+	public boolean saveAssociate(Associate associate) {
+<span class="fc" id="L47">		boolean successSave = false;</span>
+<span class="fc" id="L48">		associate = associateRepository.save(associate);</span>
+		
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (associate.getAssociateId()!=null)</span>
+<span class="fc" id="L51">			successSave=true;</span>
+<span class="fc" id="L52">		return successSave; </span>
+	}
+
+	/**
+	 * @see com.fsdfinal.skillapi.dao.AssociateDAO#getAssociateById(java.lang.Integer)
+	 */
+	@Override
+	public Associate getAssociateById(Integer associateId) {
+		 
+<span class="fc" id="L61">		return associateRepository.findByAssociateId(associateId);</span>
+	}
+
+	/**
+	 * @see com.fsdfinal.skillapi.dao.AssociateDAO#getAssociateByName(java.lang.String)
+	 */
+	@Override
+	public Associate getAssociateByName(String associateName) {
+		 
+<span class="nc" id="L70">		return associateRepository.findByName(associateName);</span>
+	}
+
+	/**
+	 * @see com.fsdfinal.skillapi.dao.AssociateDAO#deleteAssociate(com.fsdfinal.skillapi.valueobject.Associate)
+	 */
+	@Override
+	public void deleteAssociate(Associate associate) {
+<span class="fc" id="L78">		associateRepository.delete(associate);</span>
+		
+<span class="fc" id="L80">	}</span>
+
+
+	@Override
+	public List&lt;Object[]&gt; getRatedCandidates() {
+		 
+<span class="nc" id="L86">		return associateRepository.getRatedCandidatesByGender();</span>
+	}
+
+	 
+    
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span>java (Sep 19, 2018 1:05:41 PM)</div></body></html>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AssociateServiceImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Sep 19, 2018 1:05:41 PM)</a> &gt; <a href="../../index.html" class="el_group">skillapi</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.fsdfinal.skillapi.service</a> &gt; <span class="el_source">AssociateServiceImpl.java</span></div><h1>AssociateServiceImpl.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package com.fsdfinal.skillapi.service;
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import com.fsdfinal.skillapi.dao.AssociateDAO;
+import com.fsdfinal.skillapi.to.SkillDashboardTO;
+import com.fsdfinal.skillapi.valueobject.Associate;
+
+/**
+ * @author Fareedha
+ *
+ */
+@Service
+<span class="fc" id="L22">public class AssociateServiceImpl implements AssociateService {</span>
+	@Autowired
+	private AssociateDAO associateDAO;
+	
+	/*@Autowired
+	private SkillsDAO skillDAO;*/
+	 
+
+	/**
+	 * @see com.fsdfinal.skillapi.service.AssociateService#getAssociates()
+	 */
+	@Override
+	public List&lt;Associate&gt; getAssociates() {
+		 
+<span class="fc" id="L36">		return associateDAO.getAssociates();</span>
+	}
+
+	/**
+	 * @see com.fsdfinal.skillapi.service.AssociateService#addAssociate(com.fsdfinal.skillapi.valueobject.Associate)
+	 */
+	@Override
+	public boolean addAssociate(Associate associate) {
+<span class="fc" id="L44">		boolean success = false;</span>
+<span class="fc" id="L45">		Associate existAssociate = null;</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">		if(associate.getAssociateId()==0){</span>
+<span class="fc" id="L47">			existAssociate = associateDAO.getAssociateByName(associate.getName());</span>
+			// Check if the associate already exists
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">			if(existAssociate!=null </span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">					&amp;&amp; existAssociate.getName().equalsIgnoreCase(associate.getName())){</span>
+				 // associate already Exist
+<span class="nc" id="L52">				success=false; </span>
+			}else{
+			 //new Associate
+			 
+<span class="fc" id="L56">				success= associateDAO.saveAssociate(associate) ;</span>
+		    }
+		}
+<span class="fc" id="L59">		return success;</span>
+	}
+
+	/**
+	 * @see com.fsdfinal.skillapi.service.AssociateService#updateAssociate(com.fsdfinal.skillapi.valueobject.Associate)
+	 */
+	@Override
+	public boolean updateAssociate(Associate associate) {
+<span class="fc" id="L67">		boolean success = false;</span>
+<span class="fc" id="L68">		Associate existAssociate = null;</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if(associate.getAssociateId()!=0){</span>
+<span class="fc" id="L70">			existAssociate = associateDAO.getAssociateById(associate.getAssociateId());</span>
+			// Check if the associate  exists
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">			if(existAssociate!=null </span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">					&amp;&amp; existAssociate.getName().equalsIgnoreCase(associate.getName())){</span>
+				 
+<span class="fc" id="L75">				success= associateDAO.saveAssociate(associate) ;</span>
+		    }
+		}
+<span class="fc" id="L78">		return success;</span>
+	}
+
+	/**
+	 * @see com.fsdfinal.skillapi.service.AssociateService#deleteAssociate(java.lang.Integer)
+	 */
+	@Override
+	public boolean deleteAssociate(Integer associateId) {
+<span class="fc" id="L86">		boolean success = false;</span>
+		
+<span class="fc" id="L88">		Associate associate = associateDAO.getAssociateById(associateId);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		 if(associate!=null){</span>
+<span class="fc" id="L90">			 associateDAO.deleteAssociate(associate);</span>
+<span class="fc" id="L91">			 success=true;</span>
+		 }
+<span class="fc" id="L93">		return success;</span>
+	}
+
+	/**
+	 * @see com.fsdfinal.skillapi.service.AssociateService#getAssociateDetails(java.lang.Integer)
+	 */
+	@Override
+	public Associate getAssociateDetails(Integer associateId) {
+<span class="fc" id="L101">		Associate existAssociate = null;</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if(associateId!=0){</span>
+<span class="fc" id="L103">			existAssociate = associateDAO.getAssociateById(associateId);</span>
+		}
+<span class="fc" id="L105">		return existAssociate;</span>
+	}
+
+	/**
+	 * @see com.fsdfinal.skillapi.service.AssociateService#getAssociateSummary()
+	 */
+	@Override
+	public SkillDashboardTO getAssociateSummary() {
+<span class="fc" id="L113">		 List&lt;Associate&gt; associateList = associateDAO.getAssociates();</span>
+<span class="fc" id="L114">		 List&lt;Object[]&gt; ratedCandidates = associateDAO.getRatedCandidates();</span>
+<span class="fc" id="L115">		 SkillDashboardTO responseTO = new SkillDashboardTO();</span>
+<span class="fc" id="L116">		 Double maleCount = 0.0;</span>
+<span class="fc" id="L117">		 Double femaleCount = 0.0;</span>
+<span class="fc" id="L118">		 Double totalAssociateCount =0.0;</span>
+<span class="fc" id="L119">		 Double freshersCount=0.0;</span>
+<span class="fc" id="L120">		 Double level2Count=0.0;</span>
+<span class="fc" id="L121">		 Double level3Count=0.0;</span>
+<span class="fc" id="L122">		 Double totalCandidateRated=0.0;</span>
+<span class="fc" id="L123">		 Double maleCandidateRated=0.0;</span>
+<span class="fc" id="L124">		 Double femaleCandidateRated=0.0;</span>
+		
+<span class="fc" id="L126">		 Double malePercent=0.0;</span>
+<span class="fc" id="L127">		 Double femalePercent=0.0;</span>
+<span class="fc" id="L128">		 Double fresherPercent=0.0;</span>
+<span class="fc" id="L129">		 Double level2Percent=0.0;</span>
+<span class="fc" id="L130">		 Double level3Percent=0.0;</span>
+<span class="fc" id="L131">		 Double maleRatedPercent=0.0;</span>
+<span class="fc" id="L132">		 Double femaleRatedPercent=0.0;</span>
+		 
+		 
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		 if(!CollectionUtils.isEmpty(associateList)){</span>
+			 // Total Associates registered
+<span class="fc" id="L137">			 totalAssociateCount =Double.valueOf(associateList.size());</span>
+			// System.out.println(&quot;.totalAssociateCount..&quot;+totalAssociateCount);
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			 for(Associate associate:associateList){</span>
+				 // Male and Female Count
+<span class="pc bpc" id="L141" title="2 of 4 branches missed.">				 if(associate.getGender()!=null &amp;&amp; associate.getGender().equalsIgnoreCase(&quot;M&quot;)){</span>
+<span class="fc" id="L142">					 maleCount++;</span>
+					// System.out.println(&quot;.maleCount..&quot;+maleCount);
+<span class="nc bnc" id="L144" title="All 4 branches missed.">				 }else if(associate.getGender()!=null &amp;&amp; associate.getGender().equalsIgnoreCase(&quot;F&quot;)){</span>
+<span class="nc" id="L145">					 femaleCount++;</span>
+					// System.out.println(&quot;.femaleCount..&quot;+femaleCount);
+				 }
+<span class="pc bpc" id="L148" title="2 of 4 branches missed.">				 if(associate.getLevel1()!=null &amp;&amp; associate.getLevel1().equalsIgnoreCase(&quot;L1&quot;)){</span>
+<span class="fc" id="L149">					 freshersCount++;</span>
+<span class="nc bnc" id="L150" title="All 4 branches missed.">				 }else if(associate.getLevel2()!=null &amp;&amp; associate.getLevel2().equalsIgnoreCase(&quot;L2&quot;)){</span>
+<span class="nc" id="L151">					 level2Count++;</span>
+<span class="nc bnc" id="L152" title="All 4 branches missed.">				 }else if(associate.getLevel3()!=null &amp;&amp; associate.getLevel3().equalsIgnoreCase(&quot;L3&quot;)){</span>
+<span class="nc" id="L153">					 level3Count++;</span>
+				 }
+<span class="fc" id="L155">			 } </span>
+			 // Rated Candidates by Gender
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			 if(!CollectionUtils.isEmpty(ratedCandidates)){</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">				 for(Object[] associateGender:ratedCandidates){</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">					 if(associateGender[0].equals(&quot;M&quot;)){</span>
+<span class="fc" id="L160">						 maleCandidateRated = ((BigInteger) associateGender[1]).doubleValue();</span>
+						// System.out.println(&quot;male..rated..&quot;+maleCandidateRated);
+					 }else{
+<span class="nc" id="L163">						 femaleCandidateRated =  ((BigInteger) associateGender[1]).doubleValue();</span>
+						// System.out.println(&quot;female..rated..&quot;+femaleCandidateRated);
+					 }
+<span class="fc" id="L166">				 }</span>
+<span class="fc" id="L167">				 totalCandidateRated = maleCandidateRated+femaleCandidateRated;</span>
+				// System.out.println(&quot;total..rated..&quot;+totalCandidateRated);
+				 
+			 }
+		     // Male Percent
+<span class="fc" id="L172">			 malePercent = (maleCount/totalAssociateCount)*100.0;</span>
+<span class="fc" id="L173">			 malePercent= Double.valueOf(Math.round(malePercent));</span>
+			// System.out.println(&quot;malePercent..&quot;+malePercent);
+			 // Female Percent
+<span class="fc" id="L176">			 femalePercent = (femaleCount/totalAssociateCount)*100.0;</span>
+<span class="fc" id="L177">			 femalePercent= Double.valueOf(Math.round(femalePercent));</span>
+			// System.out.println(&quot;femalePercent..&quot;+femalePercent);
+			 // Freshers Percent
+<span class="fc" id="L180">			 fresherPercent = (freshersCount/totalAssociateCount)*100.0;</span>
+<span class="fc" id="L181">			 fresherPercent= Double.valueOf(Math.round(fresherPercent));</span>
+			// System.out.println(&quot;fresherPercent..&quot;+fresherPercent+&quot;..&quot;+freshersCount);
+			 // Level2 Percent
+<span class="fc" id="L184">			 level2Percent = (level2Count/totalAssociateCount)*100.0;</span>
+<span class="fc" id="L185">			 level2Percent= Double.valueOf(Math.round(level2Percent));</span>
+			// System.out.println(&quot;level2Percent..&quot;+level2Percent+&quot;..&quot;+level2Percent);
+			 // Level3 Percent
+<span class="fc" id="L188">			 level3Percent = (level3Count/totalAssociateCount)*100.0;</span>
+<span class="fc" id="L189">			 level3Percent= Double.valueOf(Math.round(level3Percent));</span>
+			 //Male Rated Percent
+<span class="fc" id="L191">			 maleRatedPercent = (maleCandidateRated/totalCandidateRated)*100.0;</span>
+<span class="fc" id="L192">			 maleRatedPercent= Double.valueOf(Math.round(maleRatedPercent));</span>
+			// System.out.println(&quot;fresherPercent..&quot;+fresherPercent+&quot;..&quot;+freshersCount);
+			 //Female Rated Percent
+<span class="fc" id="L195">			 femaleRatedPercent = (femaleCandidateRated/totalCandidateRated)*100.0;</span>
+<span class="fc" id="L196">			 femaleRatedPercent= Double.valueOf(Math.round(femaleRatedPercent));</span>
+			// System.out.println(&quot;fresherPercent..&quot;+fresherPercent+&quot;..&quot;+freshersCount);
+			 
+			 
+			 
+			 // Set the Percent to TO
+<span class="fc" id="L202">			 responseTO.setMalePercentage(String.valueOf(malePercent) );</span>
+<span class="fc" id="L203">			 responseTO.setFemalePercentage(String.valueOf(femalePercent) );</span>
+<span class="fc" id="L204">			 responseTO.setAssociatesCount(String.valueOf(totalAssociateCount) );</span>
+<span class="fc" id="L205">			 responseTO.setLevel1Percentage(String.valueOf(fresherPercent));</span>
+<span class="fc" id="L206">			 responseTO.setLevel2Percentage(String.valueOf(level2Percent));</span>
+<span class="fc" id="L207">			 responseTO.setLevel3Percentage(String.valueOf(level3Percent));</span>
+<span class="fc" id="L208">			 responseTO.setFreshersPercentage(String.valueOf(fresherPercent));</span>
+<span class="fc" id="L209">			 responseTO.setRatedAssociatesCount(String.valueOf(totalCandidateRated));</span>
+<span class="fc" id="L210">			 responseTO.setMaleRatedPercentage(String.valueOf(maleRatedPercent));</span>
+<span class="fc" id="L211">			 responseTO.setFemaleRatedPercentage(String.valueOf(femaleRatedPercent));</span>
+			 
+			 
+		 }
+		 
+		 
+<span class="fc" id="L217">		 return responseTO;</span>
+	}
+		
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span>java (Sep 19, 2018 1:05:41 PM)</div></body></html>

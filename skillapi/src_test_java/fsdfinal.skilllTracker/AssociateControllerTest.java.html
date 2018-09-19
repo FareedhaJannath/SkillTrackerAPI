@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AssociateControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Sep 19, 2018 1:05:41 PM)</a> &gt; <a href="../../index.html" class="el_group">skillapi</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">fsdfinal.skilllTracker</a> &gt; <span class="el_source">AssociateControllerTest.java</span></div><h1>AssociateControllerTest.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package fsdfinal.skilllTracker;
+
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.hamcrest.Matchers;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fsdfinal.skillapi.controller.AssociateController;
+import com.fsdfinal.skillapi.service.AssociateService;
+import com.fsdfinal.skillapi.to.SkillDashboardTO;
+import com.fsdfinal.skillapi.valueobject.Associate;
+import com.fsdfinal.skillapi.valueobject.AssociateSkill;
+import com.fsdfinal.skillapi.valueobject.Skills;
+
+/**
+ * @author Fareedha
+ *
+ */
+@RunWith(MockitoJUnitRunner.class)
+<span class="fc" id="L43">public class AssociateControllerTest {	</span>
+   
+	private MockMvc mockMvc;
+	
+	@Mock
+	private AssociateService associateServiceMock;
+	
+    @InjectMocks
+    private AssociateController associateControllerMock;
+    
+	
+	 @Before
+    public void init(){
+<span class="fc" id="L56">        MockitoAnnotations.initMocks(this);</span>
+         
+<span class="fc" id="L58">        mockMvc = MockMvcBuilders</span>
+<span class="fc" id="L59">                .standaloneSetup(associateControllerMock)</span>
+<span class="fc" id="L60">                .build();</span>
+<span class="fc" id="L61">    }</span>
+
+	@Test
+	public void test_get_Associates() throws Exception 
+	{
+		 
+	 
+<span class="fc" id="L68">		List&lt;Associate&gt; associates = new ArrayList&lt;Associate&gt;();</span>
+		
+		
+		 
+<span class="fc" id="L72">		Associate associate =  new Associate();</span>
+		
+<span class="fc" id="L74">		associate.setAssociateId(1);</span>
+<span class="fc" id="L75">		associate.setName(&quot;Fareedha&quot;);</span>
+<span class="fc" id="L76">		associate.setEmail(&quot;test@test.com&quot;);</span>
+<span class="fc" id="L77">		associate.setMobile(&quot;1234&quot;);</span>
+<span class="fc" id="L78">		associate.setStatusGreen(&quot;Y&quot;);</span>
+<span class="fc" id="L79">		associate.setStatusBlue(&quot;N&quot;);</span>
+<span class="fc" id="L80">		associate.setStatusRed(&quot;N&quot;);</span>
+<span class="fc" id="L81">		associate.setRemark(&quot;Good&quot;);</span>
+<span class="fc" id="L82">		associate.setLevel1(&quot;L1&quot;);</span>
+<span class="fc" id="L83">		associate.setLevel2(&quot;L2&quot;);</span>
+<span class="fc" id="L84">		associate.setLevel3(&quot;L3&quot;);</span>
+<span class="fc" id="L85">		associate.setStrength(&quot;Quick Learner&quot;);</span>
+<span class="fc" id="L86">		associate.setWeakness(&quot;None&quot;);</span>
+		 
+		
+<span class="fc" id="L89">		Set&lt;AssociateSkill&gt; associateSkills = new HashSet&lt;AssociateSkill&gt;();	</span>
+<span class="fc" id="L90">		associateSkills.add(new AssociateSkill(1,associate,new Skills(1,&quot;Core Java&quot;,false),2));</span>
+<span class="fc" id="L91">		associateSkills.add( new AssociateSkill(1,associate,new Skills(2,&quot;J2EE&quot;,false),4)); </span>
+<span class="fc" id="L92">		associate.setAssociateSkills(associateSkills); </span>
+<span class="fc" id="L93">		associates.add(associate);</span>
+		
+<span class="fc" id="L95">        associates.add( new Associate(2, &quot;Ilyas&quot;,&quot;test@test.com&quot;,&quot;1223&quot;, &quot;Y&quot;,</span>
+	        			&quot;N&quot;, &quot;N&quot;, &quot;L1&quot;, null, null, &quot;Good&quot;,
+	        			&quot;Quick Learner&quot;, null,associateSkills));
+
+<span class="fc" id="L99">		when(associateServiceMock.getAssociates()).thenReturn(associates);</span>
+		
+<span class="fc" id="L101">		mockMvc.perform(MockMvcRequestBuilders.get(&quot;/Associate&quot;))</span>
+<span class="fc" id="L102">		.andExpect(status().isOk())</span>
+<span class="fc" id="L103">		.andExpect(jsonPath(&quot;$[1].associateId&quot;, Matchers.is(2)))</span>
+<span class="fc" id="L104">		.andExpect(jsonPath(&quot;$[1].name&quot;, Matchers.is(&quot;Ilyas&quot;)))	</span>
+<span class="fc" id="L105">		.andExpect(jsonPath(&quot;$[1].email&quot;, Matchers.is(&quot;test@test.com&quot;)))</span>
+<span class="fc" id="L106">		.andExpect(jsonPath(&quot;$[1].mobile&quot;, Matchers.is(&quot;1223&quot;)))	;</span>
+
+<span class="fc" id="L108">	}</span>
+	
+	 
+	@Test
+	public void test_get_Associate_by_id() throws Exception 
+	{
+<span class="fc" id="L114">	   Associate associate = new Associate(1, &quot;Fareedha&quot;,&quot;test@test.com&quot;,&quot;1223&quot;, &quot;Y&quot;,</span>
+   			&quot;N&quot;, &quot;N&quot;, &quot;L1&quot;, null, null, &quot;Good&quot;,
+   			&quot;Quick Learner&quot;, null,null);
+		 
+<span class="fc" id="L118">		Set&lt;AssociateSkill&gt; associateSkills = new HashSet&lt;AssociateSkill&gt;();	</span>
+<span class="fc" id="L119">		associateSkills.add(new AssociateSkill(1,associate,new Skills(1,&quot;Core Java&quot;,false),2));</span>
+<span class="fc" id="L120">		associateSkills.add( new AssociateSkill(1,associate,new Skills(2,&quot;J2EE&quot;,false),4)); </span>
+<span class="fc" id="L121">		associate.setAssociateSkills(associateSkills); </span>
+		 
+<span class="fc" id="L123">		 List&lt;Associate&gt; associates = Arrays.asList(associate</span>
+	            ); 
+
+<span class="fc" id="L126">		 when(associateControllerMock.getAssociateDetails(1)).thenReturn(associates.get(0));</span>
+		
+<span class="fc" id="L128">		mockMvc.perform(MockMvcRequestBuilders.get(&quot;/Associate/1&quot;))</span>
+<span class="fc" id="L129">		.andExpect(status().isOk())</span>
+<span class="fc" id="L130">		.andExpect(jsonPath(&quot;$.associateId&quot;, Matchers.is(1)))</span>
+<span class="fc" id="L131">		.andExpect(jsonPath(&quot;$.name&quot;, Matchers.is(&quot;Fareedha&quot;)))	</span>
+<span class="fc" id="L132">		.andExpect(jsonPath(&quot;$.email&quot;, Matchers.is(&quot;test@test.com&quot;)))</span>
+<span class="fc" id="L133">		.andExpect(jsonPath(&quot;$.mobile&quot;, Matchers.is(&quot;1223&quot;)))	;</span>
+
+<span class="fc" id="L135">	}</span>
+	
+	@Test
+	public void test_add_associate() throws Exception 
+	{
+		 
+	 
+<span class="fc" id="L142">		 Associate addAssociate =new Associate(0, &quot;Ifthikhar&quot;,&quot;test@test.com&quot;,&quot;12223&quot;, &quot;Y&quot;,</span>
+	     			&quot;N&quot;, &quot;N&quot;, &quot;L1&quot;, null, null, &quot;Good&quot;,
+	     			&quot;Quick Learner&quot;, null,null);
+				 
+<span class="fc" id="L146">				Set&lt;AssociateSkill&gt; associateSkills = new HashSet&lt;AssociateSkill&gt;();	</span>
+<span class="fc" id="L147">				associateSkills.add(new AssociateSkill(1,addAssociate,new Skills(1,&quot;Core Java&quot;,false),6));</span>
+<span class="fc" id="L148">				associateSkills.add( new AssociateSkill(1,addAssociate,new Skills(2,&quot;J2EE&quot;,false),4)); </span>
+<span class="fc" id="L149">				addAssociate.setAssociateSkills(associateSkills); </span>
+		 
+<span class="fc" id="L151">		 String body = (new ObjectMapper()).valueToTree(addAssociate).toString();</span>
+<span class="fc" id="L152">	 	 when(associateControllerMock.addAssociate(addAssociate)).thenReturn(true);</span>
+
+<span class="fc" id="L154">			mockMvc.perform(MockMvcRequestBuilders.post(&quot;/Associate&quot;).contentType(MediaType.APPLICATION_JSON_VALUE).content(body))</span>
+<span class="fc" id="L155">						.andExpect(status().isOk()); </span>
+<span class="fc" id="L156">	}</span>
+	
+	@Test
+	public void test_update_associate() throws Exception 
+	{
+	 
+<span class="fc" id="L162">		 Associate addAssociate = new Associate(2, &quot;Ifthikhar&quot;,&quot;test@test.com&quot;,&quot;122323&quot;, &quot;Y&quot;,</span>
+	     			&quot;N&quot;, &quot;N&quot;, &quot;L1&quot;, null, null, &quot;Good&quot;,
+	     			&quot;Quick Learner&quot;, null,null);
+				 
+<span class="fc" id="L166">				Set&lt;AssociateSkill&gt; associateSkills = new HashSet&lt;AssociateSkill&gt;();	</span>
+<span class="fc" id="L167">				associateSkills.add(new AssociateSkill(1,addAssociate,new Skills(1,&quot;Core Java&quot;,false),6));</span>
+<span class="fc" id="L168">				associateSkills.add( new AssociateSkill(1,addAssociate,new Skills(2,&quot;J2EE&quot;,false),4)); </span>
+<span class="fc" id="L169">				addAssociate.setAssociateSkills(associateSkills); </span>
+				
+<span class="fc" id="L171">		String body = (new ObjectMapper()).valueToTree(addAssociate).toString();</span>
+<span class="fc" id="L172">	 	 when(associateControllerMock.updateAssociate(addAssociate)).thenReturn(true);</span>
+
+<span class="fc" id="L174">			mockMvc.perform(MockMvcRequestBuilders.put(&quot;/Associate&quot;).contentType(MediaType.APPLICATION_JSON_VALUE).content(body))</span>
+<span class="fc" id="L175">						.andExpect(status().isOk()); </span>
+<span class="fc" id="L176">	}</span>
+	@Test
+	public void test_delete_associate() throws Exception 
+	{
+	 	 
+<span class="fc" id="L181">	 	 when(associateControllerMock.deleteAssociate(1)).thenReturn(true);</span>
+
+<span class="fc" id="L183">		 	mockMvc.perform(MockMvcRequestBuilders.delete(&quot;/Associate/1&quot;).contentType(MediaType.APPLICATION_JSON_VALUE))</span>
+<span class="fc" id="L184">						.andExpect(status().isOk()); </span>
+<span class="fc" id="L185">	} </span>
+	
+	@Test
+	public void test_get_associateSymmary() throws Exception 
+	{
+	 	 
+		  
+<span class="fc" id="L192">         SkillDashboardTO responseTO = new SkillDashboardTO();</span>
+		  
+<span class="fc" id="L194">		  responseTO.setAssociatesCount(&quot;20&quot;);</span>
+<span class="fc" id="L195">		  responseTO.setFemalePercentage(&quot;48.0&quot;);</span>
+<span class="fc" id="L196">		  responseTO.setMalePercentage(&quot;52.0&quot;);</span>
+<span class="fc" id="L197">		  responseTO.setFemaleRatedPercentage(&quot;48.0&quot;);</span>
+<span class="fc" id="L198">		  responseTO.setMaleRatedPercentage(&quot;52.0&quot;);</span>
+<span class="fc" id="L199">		  responseTO.setFreshersPercentage(&quot;30.0&quot;);</span>
+<span class="fc" id="L200">		  responseTO.setLevel1Percentage(&quot;30.0&quot;);</span>
+<span class="fc" id="L201">		  responseTO.setLevel2Percentage(&quot;40.0&quot;);</span>
+<span class="fc" id="L202">		  responseTO.setLevel3Percentage(&quot;30.0&quot;);</span>
+<span class="fc" id="L203">		  responseTO.setRatedAssociatesCount(&quot;20&quot;);</span>
+		  
+<span class="fc" id="L205">			List&lt;Skills&gt; Skills = Arrays.asList(new Skills(1, &quot;Core Java&quot;, false), new Skills(2, &quot;J2EE&quot;, false));</span>
+
+<span class="fc" id="L207">			List&lt;Associate&gt; associates = new ArrayList&lt;Associate&gt;();</span>
+
+<span class="fc" id="L209">			Associate associate = new Associate();</span>
+
+<span class="fc" id="L211">			associate.setAssociateId(1);</span>
+<span class="fc" id="L212">			associate.setName(&quot;Fareedha&quot;);</span>
+<span class="fc" id="L213">			associate.setEmail(&quot;test@test.com&quot;);</span>
+<span class="fc" id="L214">			associate.setMobile(&quot;1234&quot;);</span>
+<span class="fc" id="L215">			associate.setStatusGreen(&quot;Y&quot;);</span>
+<span class="fc" id="L216">			associate.setStatusBlue(&quot;N&quot;);</span>
+<span class="fc" id="L217">			associate.setStatusRed(&quot;N&quot;);</span>
+<span class="fc" id="L218">			associate.setRemark(&quot;Good&quot;);</span>
+<span class="fc" id="L219">			associate.setLevel1(&quot;L1&quot;);</span>
+<span class="fc" id="L220">			associate.setLevel2(&quot;L2&quot;);</span>
+<span class="fc" id="L221">			associate.setLevel3(&quot;L3&quot;);</span>
+<span class="fc" id="L222">			associate.setStrength(&quot;Quick Learner&quot;);</span>
+<span class="fc" id="L223">			associate.setWeakness(&quot;None&quot;);</span>
+
+<span class="fc" id="L225">			Set&lt;AssociateSkill&gt; associateSkills1 = new HashSet&lt;AssociateSkill&gt;();</span>
+<span class="fc" id="L226">			associateSkills1.add(new AssociateSkill(1, associate, new Skills(1, &quot;Core Java&quot;, false), 2));</span>
+<span class="fc" id="L227">			associateSkills1.add(new AssociateSkill(1, associate, new Skills(2, &quot;J2EE&quot;, false), 4));</span>
+<span class="fc" id="L228">			associate.setAssociateSkills(associateSkills1);</span>
+
+<span class="fc" id="L230">			Associate associate2 = new Associate(2, &quot;Ilyas&quot;, &quot;test@test.com&quot;, &quot;1223&quot;, &quot;Y&quot;, &quot;N&quot;, &quot;N&quot;, &quot;L1&quot;, null, null,</span>
+					&quot;Good&quot;, &quot;Quick Learner&quot;, null, null);
+
+<span class="fc" id="L233">			Set&lt;AssociateSkill&gt; associateSkills2 = new HashSet&lt;AssociateSkill&gt;();</span>
+<span class="fc" id="L234">			associateSkills2.add(new AssociateSkill(1, associate2, new Skills(1, &quot;Core Java&quot;, false), 2));</span>
+<span class="fc" id="L235">			associateSkills2.add(new AssociateSkill(1, associate2, new Skills(2, &quot;J2EE&quot;, false), 4));</span>
+<span class="fc" id="L236">			associate2.setAssociateSkills(associateSkills2);</span>
+
+<span class="fc" id="L238">			associates.add(associate2);</span>
+
+<span class="fc" id="L240">			when(associateServiceMock.getAssociates()).thenReturn(associates);</span>
+
+<span class="fc" id="L242">			List&lt;Associate&gt; returnAssociates = associateServiceMock.getAssociates();</span>
+			
+<span class="fc" id="L244">		   when(associateServiceMock.getAssociateSummary()).thenReturn(responseTO);</span>
+
+<span class="fc" id="L246">			assertNotNull(returnAssociates);</span>
+		 
+		 	 
+<span class="fc" id="L249">		  assertNotNull(responseTO); </span>
+<span class="fc" id="L250">		  mockMvc.perform(MockMvcRequestBuilders.get(&quot;/Associate/summary&quot;))</span>
+<span class="fc" id="L251">			.andExpect(status().isOk())</span>
+<span class="fc" id="L252">			.andExpect(jsonPath(&quot;$.associatesCount&quot;, Matchers.is(&quot;20&quot;)))</span>
+<span class="fc" id="L253">			.andExpect(jsonPath(&quot;$.femalePercentage&quot;, Matchers.is(&quot;48.0&quot;)))	</span>
+<span class="fc" id="L254">			.andExpect(jsonPath(&quot;$.malePercentage&quot;, Matchers.is(&quot;52.0&quot;)))	</span>
+<span class="fc" id="L255">			.andExpect(jsonPath(&quot;$.femaleRatedPercentage&quot;, Matchers.is(&quot;48.0&quot;)))	</span>
+<span class="fc" id="L256">			.andExpect(jsonPath(&quot;$.maleRatedPercentage&quot;, Matchers.is(&quot;52.0&quot;)))</span>
+<span class="fc" id="L257">			.andExpect(jsonPath(&quot;$.freshersPercentage&quot;, Matchers.is(&quot;30.0&quot;)))</span>
+<span class="fc" id="L258">			.andExpect(jsonPath(&quot;$.level1Percentage&quot;, Matchers.is(&quot;30.0&quot;)))	</span>
+<span class="fc" id="L259">			.andExpect(jsonPath(&quot;$.level2Percentage&quot;, Matchers.is(&quot;40.0&quot;)))	</span>
+<span class="fc" id="L260">			.andExpect(jsonPath(&quot;$.level3Percentage&quot;, Matchers.is(&quot;30.0&quot;)))</span>
+<span class="fc" id="L261">			.andExpect(jsonPath(&quot;$.ratedAssociatesCount&quot;, Matchers.is(&quot;20&quot;)));</span>
+
+		 	 
+<span class="fc" id="L264">	} </span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span>java (Sep 19, 2018 1:05:41 PM)</div></body></html>

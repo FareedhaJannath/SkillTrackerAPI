@@ -5,6 +5,7 @@ package com.fsdfinal.skillapi.service;
 
 import java.util.List;
 
+import com.fsdfinal.skillapi.to.SkillDashboardTO;
 import com.fsdfinal.skillapi.valueobject.Associate;
 
 /**
@@ -19,9 +20,9 @@ public interface AssociateService {
 	public List<Associate> getAssociates();
 	
 	/**
-	 * @return List of Associates
+	 * @return SkillDashboardTO
 	 */
-	public List<Associate> getAssociateSummary();
+	public SkillDashboardTO getAssociateSummary();
 	
 	/**
 	 * @param associate

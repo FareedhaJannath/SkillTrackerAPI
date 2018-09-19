@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SkillControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Sep 19, 2018 1:05:41 PM)</a> &gt; <a href="../../index.html" class="el_group">skillapi</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">fsdfinal.skilllTracker</a> &gt; <span class="el_source">SkillControllerTest.java</span></div><h1>SkillControllerTest.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package fsdfinal.skilllTracker;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.hamcrest.Matchers;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fsdfinal.skillapi.controller.SkillController;
+import com.fsdfinal.skillapi.service.SkillService;
+import com.fsdfinal.skillapi.valueobject.Skills;
+
+/**
+ * @author Fareedha
+ *
+ */
+@RunWith(MockitoJUnitRunner.class)
+<span class="fc" id="L36">public class SkillControllerTest {	</span>
+   
+	private MockMvc mockMvc;
+	
+	@Mock
+	private SkillService skillServiceMock;
+	
+    @InjectMocks
+    private SkillController skillControllerMock;
+    
+	
+	 @Before
+    public void init(){
+<span class="fc" id="L49">        MockitoAnnotations.initMocks(this);</span>
+         
+<span class="fc" id="L51">        mockMvc = MockMvcBuilders</span>
+<span class="fc" id="L52">                .standaloneSetup(skillControllerMock)</span>
+<span class="fc" id="L53">                .build();</span>
+<span class="fc" id="L54">    }</span>
+
+	@Test
+	public void test_get_Skills() throws Exception 
+	{
+		 
+<span class="fc" id="L60">		List&lt;Skills&gt; Skills = Arrays.asList(</span>
+<span class="fc" id="L61">	            new Skills(1, &quot;Core Java&quot;,false),</span>
+<span class="fc" id="L62">	            new Skills(2, &quot;J2EE&quot;,false));</span>
+
+<span class="fc" id="L64">		when(skillServiceMock.getSkills()).thenReturn(Skills);</span>
+		
+<span class="fc" id="L66">		mockMvc.perform(MockMvcRequestBuilders.get(&quot;/Skills&quot;))</span>
+<span class="fc" id="L67">		.andExpect(status().isOk())</span>
+<span class="fc" id="L68">		.andExpect(jsonPath(&quot;$[0].skillId&quot;, Matchers.is(1)))</span>
+<span class="fc" id="L69">		.andExpect(jsonPath(&quot;$[0].skillName&quot;, Matchers.is(&quot;Core Java&quot;)))	</span>
+<span class="fc" id="L70">		.andExpect(jsonPath(&quot;$[1].skillId&quot;, Matchers.is(2)))</span>
+<span class="fc" id="L71">		.andExpect(jsonPath(&quot;$[1].skillName&quot;, Matchers.is(&quot;J2EE&quot;)))	;</span>
+
+<span class="fc" id="L73">	}</span>
+	
+	@Test
+	public void test_get_Skills_by_id() throws Exception 
+	{
+		 
+<span class="fc" id="L79">		List&lt;Skills&gt; Skills = Arrays.asList(</span>
+<span class="fc" id="L80">	            new Skills(1, &quot;Core Java&quot;,false),</span>
+<span class="fc" id="L81">	            new Skills(2, &quot;J2EE&quot;,false));</span>
+
+<span class="fc" id="L83">		when(skillServiceMock.getSkillDetail(2)).thenReturn(Skills.get(1));</span>
+		
+<span class="fc" id="L85">		mockMvc.perform(MockMvcRequestBuilders.get(&quot;/Skills/skillId/2&quot;))</span>
+<span class="fc" id="L86">		.andExpect(status().isOk())</span>
+<span class="fc" id="L87">		.andExpect(jsonPath(&quot;$.skillId&quot;, Matchers.is(2)))</span>
+<span class="fc" id="L88">		.andExpect(jsonPath(&quot;$.skillName&quot;, Matchers.is(&quot;J2EE&quot;)))	;</span>
+
+<span class="fc" id="L90">	}</span>
+	
+	@Test
+	public void test_add_Skill() throws Exception 
+	{
+		 
+<span class="fc" id="L96">		 Skills addSkill = new Skills();</span>
+<span class="fc" id="L97">		 addSkill.setSkillId(0);</span>
+<span class="fc" id="L98">		 addSkill.setSkillName(&quot;Angular JS 2&quot;);</span>
+		 
+<span class="fc" id="L100">		 String body = (new ObjectMapper()).valueToTree(addSkill).toString();</span>
+<span class="fc" id="L101">	 	 when(skillServiceMock.addSkill(addSkill)).thenReturn(true);</span>
+
+<span class="fc" id="L103">			mockMvc.perform(MockMvcRequestBuilders.post(&quot;/Skills&quot;).contentType(MediaType.APPLICATION_JSON_VALUE).content(body))</span>
+<span class="fc" id="L104">						.andExpect(status().isOk());</span>
+<span class="fc" id="L105">	}</span>
+	
+	@Test
+	public void test_update_Skill() throws Exception 
+	{
+		 
+<span class="fc" id="L111">		 Skills updateSkill = new Skills();</span>
+<span class="fc" id="L112">		 updateSkill.setSkillId(1);</span>
+<span class="fc" id="L113">		 updateSkill.setSkillName(&quot;Angular JS 2&quot;);</span>
+		 
+<span class="fc" id="L115">		 String body = (new ObjectMapper()).valueToTree(updateSkill).toString();</span>
+<span class="fc" id="L116">	 	 when(skillServiceMock.updateSkill(updateSkill)).thenReturn(true);</span>
+
+<span class="fc" id="L118">			mockMvc.perform(MockMvcRequestBuilders.put(&quot;/Skills&quot;).contentType(MediaType.APPLICATION_JSON_VALUE).content(body))</span>
+<span class="fc" id="L119">						.andExpect(status().isOk());</span>
+<span class="fc" id="L120">	}</span>
+	@Test
+	public void test_delete_Skill() throws Exception 
+	{
+	 	 
+		// String body = (new ObjectMapper()).valueToTree(updateSkill).toString();
+<span class="fc" id="L126">	 	 when(skillServiceMock.deleteSkill(1)).thenReturn(true);</span>
+
+<span class="fc" id="L128">			mockMvc.perform(MockMvcRequestBuilders.delete(&quot;/Skills/1&quot;).contentType(MediaType.APPLICATION_JSON_VALUE))</span>
+<span class="fc" id="L129">						.andExpect(status().isOk());</span>
+<span class="fc" id="L130">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span>java (Sep 19, 2018 1:05:41 PM)</div></body></html>

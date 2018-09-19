@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class SkillDashboardTO {
 	
-    private Long id;
+    /*private Long id;
 	
 	private Long associateId;
 	
@@ -31,7 +31,7 @@ public class SkillDashboardTO {
 	
 	private String strength;
 	
-	private String weakness;
+	private String weakness;*/
 		
 	private String associatesCount;
 	
@@ -53,165 +53,9 @@ public class SkillDashboardTO {
 	
 	private String level3Percentage;
 	
-	private String skills;
+	/*private String skills;
 	
-	private List<SkillDashboardTO> associatesList;
-
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the associateId
-	 */
-	public Long getAssociateId() {
-		return associateId;
-	}
-
-	/**
-	 * @param associateId the associateId to set
-	 */
-	public void setAssociateId(Long associateId) {
-		this.associateId = associateId;
-	}
-
-	/**
-	 * @return the associateName
-	 */
-	public String getAssociateName() {
-		return associateName;
-	}
-
-	/**
-	 * @param associateName the associateName to set
-	 */
-	public void setAssociateName(String associateName) {
-		this.associateName = associateName;
-	}
-
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	/**
-	 * @return the mobile
-	 */
-	public Long getMobile() {
-		return mobile;
-	}
-
-	/**
-	 * @param mobile the mobile to set
-	 */
-	public void setMobile(Long mobile) {
-		this.mobile = mobile;
-	}
-
-	/**
-	 * @return the gender
-	 */
-	public String getGender() {
-		return gender;
-	}
-
-	/**
-	 * @param gender the gender to set
-	 */
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	/**
-	 * @return the status
-	 */
-	public String getStatus() {
-		return status;
-	}
-
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	/**
-	 * @return the level
-	 */
-	public String getLevel() {
-		return level;
-	}
-
-	/**
-	 * @param level the level to set
-	 */
-	public void setLevel(String level) {
-		this.level = level;
-	}
-
-	/**
-	 * @return the remark
-	 */
-	public String getRemark() {
-		return remark;
-	}
-
-	/**
-	 * @param remark the remark to set
-	 */
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	/**
-	 * @return the strength
-	 */
-	public String getStrength() {
-		return strength;
-	}
-
-	/**
-	 * @param strength the strength to set
-	 */
-	public void setStrength(String strength) {
-		this.strength = strength;
-	}
-
-	/**
-	 * @return the weakness
-	 */
-	public String getWeakness() {
-		return weakness;
-	}
-
-	/**
-	 * @param weakness the weakness to set
-	 */
-	public void setWeakness(String weakness) {
-		this.weakness = weakness;
-	}
-
-
+	private List<SkillDashboardTO> associatesList;*/
 
 	/**
 	 * @return the associatesCount
@@ -352,34 +196,9 @@ public class SkillDashboardTO {
 	public void setLevel3Percentage(String level3Percentage) {
 		this.level3Percentage = level3Percentage;
 	}
-
-	/**
-	 * @return the skills
-	 */
-	public String getSkills() {
-		return skills;
-	}
-
-	/**
-	 * @param skills the skills to set
-	 */
-	public void setSkills(String skills) {
-		this.skills = skills;
-	}
-
-	/**
-	 * @return the associatesList
-	 */
-	public List<SkillDashboardTO> getAssociatesList() {
-		return associatesList;
-	}
-
-	/**
-	 * @param associatesList the associatesList to set
-	 */
-	public void setAssociatesList(List<SkillDashboardTO> associatesList) {
-		this.associatesList = associatesList;
-	}
 	
+
+
+	 
 
 }

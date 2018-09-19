@@ -5,6 +5,7 @@ package com.fsdfinal.skillapi.dao;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -39,5 +40,11 @@ public interface AssociateRepository extends CrudRepository<Associate,Long>{
 	 * @see org.springframework.data.repository.CrudRepository#delete(java.lang.Object)
 	 */
 	public void delete(Associate associate);
+	
+ 
+	@Query(value = "SELECT a.gender, count(DISTINCT a.associate_id) from associate  a "
+			+ " LEFT OUTER JOIN associate_skills ask ON a.associate_id = ask.associate_id"
+			+" WHERE ask.skill_rating > 0  GROUP BY a.gender", nativeQuery = true)
+	public List<Object[]> getRatedCandidatesByGender();
 
 }

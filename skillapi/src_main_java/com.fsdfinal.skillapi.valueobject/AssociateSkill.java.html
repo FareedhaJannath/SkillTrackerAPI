@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AssociateSkill.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Sep 19, 2018 1:05:41 PM)</a> &gt; <a href="../../index.html" class="el_group">skillapi</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.fsdfinal.skillapi.valueobject</a> &gt; <span class="el_source">AssociateSkill.java</span></div><h1>AssociateSkill.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package com.fsdfinal.skillapi.valueobject;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+/**
+ * @author Fareedha
+ *
+ */
+@Entity
+@Table(name = &quot;ASSOCIATE_SKILLS&quot;)
+@JsonIgnoreProperties({&quot;hibernateLazyInitializer&quot;, &quot;handler&quot;})
+public class AssociateSkill implements Serializable {
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7513801686195881222L;
+	/**
+	 * associate ID
+	 */
+	 @Id
+	 @GeneratedValue(strategy=GenerationType.AUTO)
+	 @Column(name=&quot;ASSOCIATE_SKILL_ID&quot;)
+     private Integer associateSkillId;
+     /**
+      * associate Id
+      */
+	 @ManyToOne(fetch=FetchType.LAZY)
+	 @Cascade({CascadeType.ALL})
+	 @JoinColumn(name=&quot;ASSOCIATE_ID&quot; )
+	 @JsonIgnore
+     private Associate associate;
+     /**
+      * skill Id
+      */
+	 @ManyToOne(fetch=FetchType.LAZY)
+	 @Cascade({CascadeType.SAVE_UPDATE,CascadeType.MERGE})
+	 @JoinColumn(name=&quot;SKILL_ID&quot; )
+     private Skills skill;
+	 
+	 @Column(name=&quot;skill_rating&quot;)
+	 private Integer skillRating;
+	 
+<span class="fc" id="L64">	 public AssociateSkill(){}</span>
+	 
+	  
+
+	public AssociateSkill(Integer associateSkillId, Associate associate, Skills skill, Integer skillRating) {
+<span class="fc" id="L69">		super();</span>
+<span class="fc" id="L70">		this.associateSkillId = associateSkillId;</span>
+<span class="fc" id="L71">		this.associate = associate;</span>
+<span class="fc" id="L72">		this.skill = skill;</span>
+<span class="fc" id="L73">		this.skillRating = skillRating;</span>
+<span class="fc" id="L74">	}</span>
+
+
+
+	/**
+	 * @return the associateSkillId
+	 */
+	public Integer getAssociateSkillId() {
+<span class="fc" id="L82">		return associateSkillId;</span>
+	}
+
+	/**
+	 * @param associateSkillId the associateSkillId to set
+	 */
+	public void setAssociateSkillId(Integer associateSkillId) {
+<span class="fc" id="L89">		this.associateSkillId = associateSkillId;</span>
+<span class="fc" id="L90">	}</span>
+
+	/**
+	 * @return the associate
+	 */
+	public Associate getAssociate() {
+<span class="nc" id="L96">		return associate;</span>
+	}
+
+	/**
+	 * @param associate the associate to set
+	 */
+	public void setAssociate(Associate associate) {
+<span class="fc" id="L103">		this.associate = associate;</span>
+<span class="fc" id="L104">	}</span>
+
+	/**
+	 * @return the skill
+	 */
+	public Skills getSkill() {
+<span class="fc" id="L110">		return skill;</span>
+	}
+
+	/**
+	 * @param skill the skill to set
+	 */
+	public void setSkill(Skills skill) {
+<span class="fc" id="L117">		this.skill = skill;</span>
+<span class="fc" id="L118">	}</span>
+
+	/**
+	 * @return the skillRating
+	 */
+	public Integer getSkillRating() {
+<span class="fc" id="L124">		return skillRating;</span>
+	}
+
+	/**
+	 * @param skillRating the skillRating to set
+	 */
+	public void setSkillRating(Integer skillRating) {
+<span class="fc" id="L131">		this.skillRating = skillRating;</span>
+<span class="fc" id="L132">	}</span>
+ 
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span>java (Sep 19, 2018 1:05:41 PM)</div></body></html>

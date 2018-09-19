@@ -79,6 +79,13 @@ public class AssociateDAOImpl implements AssociateDAO {
 		
 	}
 
+
+	@Override
+	public List<Object[]> getRatedCandidates() {
+		 
+		return associateRepository.getRatedCandidatesByGender();
+	}
+
 	 
     
 	

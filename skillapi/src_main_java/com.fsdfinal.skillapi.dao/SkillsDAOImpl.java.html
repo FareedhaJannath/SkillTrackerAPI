@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SkillsDAOImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Sep 19, 2018 1:05:41 PM)</a> &gt; <a href="../../index.html" class="el_group">skillapi</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.fsdfinal.skillapi.dao</a> &gt; <span class="el_source">SkillsDAOImpl.java</span></div><h1>SkillsDAOImpl.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package com.fsdfinal.skillapi.dao;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fsdfinal.skillapi.valueobject.Skills;
+
+/**
+ * @author Fareedha
+ *
+ */
+
+@Transactional
+@Repository
+<span class="fc" id="L22">public class SkillsDAOImpl implements SkillsDAO {</span>
+	/**
+	 * Logger implementation for DAO Layer
+	 */
+<span class="fc" id="L26">	private static Logger log=Logger.getLogger(SkillsDAOImpl.class);</span>
+	/**
+	 * Category Repository
+	 */
+	@Autowired
+	public SkillsRepository skillRepository;
+	 
+
+	@Override
+	public List&lt;Skills&gt; getSkills() {
+<span class="fc" id="L36">		log.info(&quot;getSkills&quot;);</span>
+<span class="fc" id="L37">		return skillRepository.findAll();</span>
+	}
+
+	@Override
+	public boolean saveSkill(Skills skill) {
+<span class="fc" id="L42">		boolean successSave = false;</span>
+<span class="fc" id="L43">		skill = skillRepository.save(skill);</span>
+		
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (skill.getSkillId()!=null)</span>
+<span class="fc" id="L46">			successSave=true;</span>
+<span class="fc" id="L47">		return successSave;</span>
+	}
+
+	@Override
+	public Skills getSkillById(Integer skillId) {
+<span class="fc" id="L52">		return skillRepository.findBySkillId(skillId);</span>
+	}
+
+	@Override
+	public Skills getSkillByName(String skillName) {
+<span class="nc" id="L57">		return skillRepository.findBySkillName(skillName);</span>
+	}
+
+	@Override
+	public void deleteSkill(Skills skill) {
+<span class="fc" id="L62">		skillRepository.delete(skill);</span>
+<span class="fc" id="L63">	}</span>
+	 
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span>java (Sep 19, 2018 1:05:41 PM)</div></body></html>

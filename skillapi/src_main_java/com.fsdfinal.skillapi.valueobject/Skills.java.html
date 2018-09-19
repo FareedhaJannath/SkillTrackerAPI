@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Skills.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Sep 19, 2018 1:05:41 PM)</a> &gt; <a href="../../index.html" class="el_group">skillapi</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.fsdfinal.skillapi.valueobject</a> &gt; <span class="el_source">Skills.java</span></div><h1>Skills.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package com.fsdfinal.skillapi.valueobject;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+/**
+ * @author Fareedha
+ *
+ */
+
+@Entity
+@Table(name = &quot;SKILLS&quot;)
+public class Skills implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8999965771190613844L;
+	/**
+	 * Category Id
+	 */
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name=&quot;SKILL_ID&quot;)
+	private Integer skillId;
+    /** 
+     * Category Title
+     */
+	@Column(name=&quot;SKILL_NAME&quot;,nullable = false, length = 100)
+	private String skillName;
+	
+	/**
+	 * Associates List
+	 */
+<span class="fc" id="L54">	@OneToMany(mappedBy=&quot;skill&quot;)</span>
+	@JsonIgnore
+	 @NotFound(action=NotFoundAction.IGNORE)
+	 @Cascade({CascadeType.SAVE_UPDATE})
+	private Set&lt;AssociateSkill&gt; associateSkills = new HashSet&lt;AssociateSkill&gt;();
+    
+<span class="fc" id="L60">    public Skills(){}</span>
+
+	/**
+	 * @param skillId
+	 * @param skillName
+	 * @param editable
+	 */
+	public Skills(Integer skillId, String skillName, boolean editable) {
+<span class="fc" id="L68">		super();</span>
+<span class="fc" id="L69">		this.skillId = skillId;</span>
+<span class="fc" id="L70">		this.skillName = skillName;</span>
+		//this.editable = editable;
+<span class="fc" id="L72">	}</span>
+
+	/**
+	 * @return the skillId
+	 */
+	public Integer getSkillId() {
+<span class="fc" id="L78">		return skillId;</span>
+	}
+
+	/**
+	 * @param skillId the skillId to set
+	 */
+	public void setSkillId(Integer skillId) {
+<span class="fc" id="L85">		this.skillId = skillId;</span>
+<span class="fc" id="L86">	}</span>
+
+	/**
+	 * @return the skillName
+	 */
+	public String getSkillName() {
+<span class="fc" id="L92">		return skillName;</span>
+	}
+
+	/**
+	 * @param skillName the skillName to set
+	 */
+	public void setSkillName(String skillName) {
+<span class="fc" id="L99">		this.skillName = skillName;</span>
+<span class="fc" id="L100">	}</span>
+
+	/**
+	 * @return the associateSkills
+	 */
+	public Set&lt;AssociateSkill&gt; getAssociateSkills() {
+<span class="nc" id="L106">		return associateSkills;</span>
+	}
+
+	/**
+	 * @param associateSkills the associateSkills to set
+	 */
+	public void setAssociateSkills(Set&lt;AssociateSkill&gt; associateSkills) {
+
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		for(AssociateSkill associateSkill:associateSkills){</span>
+<span class="nc" id="L115">			associateSkill.setSkill(this);</span>
+<span class="nc" id="L116">		}</span>
+<span class="nc" id="L117">		this.associateSkills = associateSkills;</span>
+<span class="nc" id="L118">	}</span>
+
+	 
+ 
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span>java (Sep 19, 2018 1:05:41 PM)</div></body></html>

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Associate.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Sep 19, 2018 1:05:41 PM)</a> &gt; <a href="../../index.html" class="el_group">skillapi</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.fsdfinal.skillapi.valueobject</a> &gt; <span class="el_source">Associate.java</span></div><h1>Associate.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package com.fsdfinal.skillapi.valueobject;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+/**
+ * @author Fareedha
+ *
+ */
+@Entity
+@Table(name = &quot;ASSOCIATE&quot;)
+public class Associate implements Serializable {
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3519253830338698605L;
+	
+	/**
+	 * associate ID
+	 */
+	 @Id
+	 @GeneratedValue(strategy=GenerationType.AUTO)
+	 @Column(name=&quot;ASSOCIATE_ID&quot;)
+     private Integer associateId;
+     /**
+      * name
+      */
+	 @Column(name=&quot;NAME&quot;)
+     private String name;
+     /**
+      * email
+      */
+	 @Column(name=&quot;EMAIL&quot;)
+     private String email;
+	 /**
+	  * Gender
+	  */
+	 @Column(name=&quot;GENDER&quot;)
+	 private String gender;
+     /**
+      * mobile
+      */
+	 @Column(name=&quot;MOBILE&quot;)
+     private String mobile;
+     /**
+      * green status
+      */
+	 @Column(name=&quot;STATUS_GREEN&quot;)
+     private String statusGreen;
+     /**
+      * blue status
+      */
+	 @Column(name=&quot;STATUS_BLUE&quot;)
+     private String statusBlue;
+     /**
+      * red status
+      */
+	 @Column(name=&quot;STATUS_RED&quot;)
+     private String statusRed;
+     /**
+      * Level 1
+      */
+	 @Column(name=&quot;LEVEL_1&quot;)
+     private String level1;
+     /**
+      * Level 2
+      */
+	 @Column(name=&quot;LEVEL_2&quot;)
+     private String level2;
+     /**
+      * Level 1
+      */
+	 @Column(name=&quot;LEVEL_3&quot;)
+     private String level3;
+     /**
+      * remark
+      */
+	 @Column(name=&quot;REMARK&quot;)
+     private String remark;
+     /**
+      * strength
+      */
+	  @Column(name=&quot;STRENGTH&quot;)
+      private String strength;
+     /**
+      * weakness
+      */
+	 @Column(name=&quot;WEAKNESS&quot;)
+     private String weakness;
+	 
+	/* @OneToMany(cascade = { 
+		        CascadeType.PERSIST, 
+		        CascadeType.MERGE
+		    })
+		    @JoinTable(name = &quot;associate_skills&quot;,
+		        joinColumns = @JoinColumn(name = &quot;associate_id&quot;),
+		        inverseJoinColumns = @JoinColumn(name = &quot;skill_id&quot;)
+		    ) */
+<span class="fc" id="L118">	 @OneToMany(mappedBy=&quot;associate&quot;)</span>
+	 @NotFound(action=NotFoundAction.IGNORE)
+	 @Cascade({CascadeType.DELETE,CascadeType.SAVE_UPDATE,CascadeType.MERGE,CascadeType.ALL})
+ 	 private Set&lt;AssociateSkill&gt; associateSkills = new HashSet&lt;AssociateSkill&gt;();
+	 
+<span class="fc" id="L123">	 public Associate(){};</span>
+	 
+	public Associate(Integer associateId, String name, String email, String mobile, String statusGreen,
+			String statusBlue, String statusRed, String level1, String level2, String level3, String remark,
+			String strength, String weakness, Set&lt;AssociateSkill&gt; associateSkills) {
+<span class="fc" id="L128">		super();</span>
+<span class="fc" id="L129">		this.associateId = associateId;</span>
+<span class="fc" id="L130">		this.name = name;</span>
+<span class="fc" id="L131">		this.email = email;</span>
+<span class="fc" id="L132">		this.mobile = mobile;</span>
+<span class="fc" id="L133">		this.statusGreen = statusGreen;</span>
+<span class="fc" id="L134">		this.statusBlue = statusBlue;</span>
+<span class="fc" id="L135">		this.statusRed = statusRed;</span>
+<span class="fc" id="L136">		this.level1 = level1;</span>
+<span class="fc" id="L137">		this.level2 = level2;</span>
+<span class="fc" id="L138">		this.level3 = level3;</span>
+<span class="fc" id="L139">		this.remark = remark;</span>
+<span class="fc" id="L140">		this.strength = strength;</span>
+<span class="fc" id="L141">		this.weakness = weakness;</span>
+<span class="fc" id="L142">		this.associateSkills = associateSkills;</span>
+<span class="fc" id="L143">	} </span>
+	/**
+	 * @return the associateId
+	 */
+	public Integer getAssociateId() {
+<span class="fc" id="L148">		return associateId;</span>
+	}
+	/**
+	 * @param associateId the associateId to set
+	 */
+	public void setAssociateId(Integer associateId) {
+<span class="fc" id="L154">		this.associateId = associateId;</span>
+<span class="fc" id="L155">	}</span>
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+<span class="fc" id="L160">		return name;</span>
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+<span class="fc" id="L166">		this.name = name;</span>
+<span class="fc" id="L167">	}</span>
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+<span class="fc" id="L172">		return email;</span>
+	}
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+<span class="fc" id="L178">		this.email = email;</span>
+<span class="fc" id="L179">	}</span>
+	/**
+	 * @return the mobile
+	 */
+	public String getMobile() {
+<span class="fc" id="L184">		return mobile;</span>
+	}
+	/**
+	 * @param mobile the mobile to set
+	 */
+	public void setMobile(String mobile) {
+<span class="fc" id="L190">		this.mobile = mobile;</span>
+<span class="fc" id="L191">	}</span>
+	/**
+	 * @return the statusGreen
+	 */
+	public String getStatusGreen() {
+<span class="fc" id="L196">		return statusGreen;</span>
+	}
+	/**
+	 * @param statusGreen the statusGreen to set
+	 */
+	public void setStatusGreen(String statusGreen) {
+<span class="fc" id="L202">		this.statusGreen = statusGreen;</span>
+<span class="fc" id="L203">	}</span>
+	/**
+	 * @return the statusBlue
+	 */
+	public String getStatusBlue() {
+<span class="fc" id="L208">		return statusBlue;</span>
+	}
+	/**
+	 * @param statusBlue the statusBlue to set
+	 */
+	public void setStatusBlue(String statusBlue) {
+<span class="fc" id="L214">		this.statusBlue = statusBlue;</span>
+<span class="fc" id="L215">	}</span>
+	/**
+	 * @return the statusRed
+	 */
+	public String getStatusRed() {
+<span class="fc" id="L220">		return statusRed;</span>
+	}
+	/**
+	 * @param statusRed the statusRed to set
+	 */
+	public void setStatusRed(String statusRed) {
+<span class="fc" id="L226">		this.statusRed = statusRed;</span>
+<span class="fc" id="L227">	}</span>
+	/**
+	 * @return the level1
+	 */
+	public String getLevel1() {
+<span class="fc" id="L232">		return level1;</span>
+	}
+	/**
+	 * @param level1 the level1 to set
+	 */
+	public void setLevel1(String level1) {
+<span class="fc" id="L238">		this.level1 = level1;</span>
+<span class="fc" id="L239">	}</span>
+	/**
+	 * @return the level2
+	 */
+	public String getLevel2() {
+<span class="fc" id="L244">		return level2;</span>
+	}
+	/**
+	 * @param level2 the level2 to set
+	 */
+	public void setLevel2(String level2) {
+<span class="fc" id="L250">		this.level2 = level2;</span>
+<span class="fc" id="L251">	}</span>
+	/**
+	 * @return the level3
+	 */
+	public String getLevel3() {
+<span class="fc" id="L256">		return level3;</span>
+	}
+	/**
+	 * @param level3 the level3 to set
+	 */
+	public void setLevel3(String level3) {
+<span class="fc" id="L262">		this.level3 = level3;</span>
+<span class="fc" id="L263">	}</span>
+	/**
+	 * @return the remark
+	 */
+	public String getRemark() {
+<span class="fc" id="L268">		return remark;</span>
+	}
+	/**
+	 * @param remark the remark to set
+	 */
+	public void setRemark(String remark) {
+<span class="fc" id="L274">		this.remark = remark;</span>
+<span class="fc" id="L275">	}</span>
+	/**
+	 * @return the strength
+	 */
+	public String getStrength() {
+<span class="fc" id="L280">		return strength;</span>
+	}
+	/**
+	 * @param strength the strength to set
+	 */
+	public void setStrength(String strength) {
+<span class="fc" id="L286">		this.strength = strength;</span>
+<span class="fc" id="L287">	}</span>
+	/**
+	 * @return the weakness
+	 */
+	public String getWeakness() {
+<span class="fc" id="L292">		return weakness;</span>
+	}
+	/**
+	 * @param weakness the weakness to set
+	 */
+	public void setWeakness(String weakness) {
+<span class="fc" id="L298">		this.weakness = weakness;</span>
+<span class="fc" id="L299">	}</span>
+
+
+	/**
+	 * @return the gender
+	 */
+	public String getGender() {
+<span class="fc" id="L306">		return gender;</span>
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(String gender) {
+<span class="fc" id="L313">		this.gender = gender;</span>
+<span class="fc" id="L314">	}</span>
+
+	/**
+	 * @return the associateSkills
+	 */
+	public Set&lt;AssociateSkill&gt; getAssociateSkills() {
+<span class="fc" id="L320">		return associateSkills;</span>
+	}
+
+	/**
+	 * @param associateSkills the associateSkills to set
+	 */
+	public void setAssociateSkills(Set&lt;AssociateSkill&gt; associateSkills) {
+		
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		for(AssociateSkill associateSkill:associateSkills){</span>
+<span class="fc" id="L329">			associateSkill.setAssociate(this);</span>
+<span class="fc" id="L330">		}</span>
+<span class="fc" id="L331">		this.associateSkills = associateSkills;</span>
+<span class="fc" id="L332">	}</span>
+
+     
+     
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span>java (Sep 19, 2018 1:05:41 PM)</div></body></html>

@@ -3,6 +3,7 @@
  */
 package fsdfinal.skilllTracker;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,6 +30,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsdfinal.skillapi.controller.AssociateController;
 import com.fsdfinal.skillapi.service.AssociateService;
+import com.fsdfinal.skillapi.to.SkillDashboardTO;
 import com.fsdfinal.skillapi.valueobject.Associate;
 import com.fsdfinal.skillapi.valueobject.AssociateSkill;
 import com.fsdfinal.skillapi.valueobject.Skills;
@@ -180,5 +182,84 @@ public class AssociateControllerTest {
 
 		 	mockMvc.perform(MockMvcRequestBuilders.delete("/Associate/1").contentType(MediaType.APPLICATION_JSON_VALUE))
 						.andExpect(status().isOk()); 
+	} 
+	
+	@Test
+	public void test_get_associateSymmary() throws Exception 
+	{
+	 	 
+		  
+         SkillDashboardTO responseTO = new SkillDashboardTO();
+		  
+		  responseTO.setAssociatesCount("20");
+		  responseTO.setFemalePercentage("48.0");
+		  responseTO.setMalePercentage("52.0");
+		  responseTO.setFemaleRatedPercentage("48.0");
+		  responseTO.setMaleRatedPercentage("52.0");
+		  responseTO.setFreshersPercentage("30.0");
+		  responseTO.setLevel1Percentage("30.0");
+		  responseTO.setLevel2Percentage("40.0");
+		  responseTO.setLevel3Percentage("30.0");
+		  responseTO.setRatedAssociatesCount("20");
+		  
+			List<Skills> Skills = Arrays.asList(new Skills(1, "Core Java", false), new Skills(2, "J2EE", false));
+
+			List<Associate> associates = new ArrayList<Associate>();
+
+			Associate associate = new Associate();
+
+			associate.setAssociateId(1);
+			associate.setName("Fareedha");
+			associate.setEmail("test@test.com");
+			associate.setMobile("1234");
+			associate.setStatusGreen("Y");
+			associate.setStatusBlue("N");
+			associate.setStatusRed("N");
+			associate.setRemark("Good");
+			associate.setLevel1("L1");
+			associate.setLevel2("L2");
+			associate.setLevel3("L3");
+			associate.setStrength("Quick Learner");
+			associate.setWeakness("None");
+
+			Set<AssociateSkill> associateSkills1 = new HashSet<AssociateSkill>();
+			associateSkills1.add(new AssociateSkill(1, associate, new Skills(1, "Core Java", false), 2));
+			associateSkills1.add(new AssociateSkill(1, associate, new Skills(2, "J2EE", false), 4));
+			associate.setAssociateSkills(associateSkills1);
+
+			Associate associate2 = new Associate(2, "Ilyas", "test@test.com", "1223", "Y", "N", "N", "L1", null, null,
+					"Good", "Quick Learner", null, null);
+
+			Set<AssociateSkill> associateSkills2 = new HashSet<AssociateSkill>();
+			associateSkills2.add(new AssociateSkill(1, associate2, new Skills(1, "Core Java", false), 2));
+			associateSkills2.add(new AssociateSkill(1, associate2, new Skills(2, "J2EE", false), 4));
+			associate2.setAssociateSkills(associateSkills2);
+
+			associates.add(associate2);
+
+			when(associateServiceMock.getAssociates()).thenReturn(associates);
+
+			List<Associate> returnAssociates = associateServiceMock.getAssociates();
+			
+		   when(associateServiceMock.getAssociateSummary()).thenReturn(responseTO);
+
+			assertNotNull(returnAssociates);
+		 
+		 	 
+		  assertNotNull(responseTO); 
+		  mockMvc.perform(MockMvcRequestBuilders.get("/Associate/summary"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.associatesCount", Matchers.is("20")))
+			.andExpect(jsonPath("$.femalePercentage", Matchers.is("48.0")))	
+			.andExpect(jsonPath("$.malePercentage", Matchers.is("52.0")))	
+			.andExpect(jsonPath("$.femaleRatedPercentage", Matchers.is("48.0")))	
+			.andExpect(jsonPath("$.maleRatedPercentage", Matchers.is("52.0")))
+			.andExpect(jsonPath("$.freshersPercentage", Matchers.is("30.0")))
+			.andExpect(jsonPath("$.level1Percentage", Matchers.is("30.0")))	
+			.andExpect(jsonPath("$.level2Percentage", Matchers.is("40.0")))	
+			.andExpect(jsonPath("$.level3Percentage", Matchers.is("30.0")))
+			.andExpect(jsonPath("$.ratedAssociatesCount", Matchers.is("20")));
+
+		 	 
 	} 
 }

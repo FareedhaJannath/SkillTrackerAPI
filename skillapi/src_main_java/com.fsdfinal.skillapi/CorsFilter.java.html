@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CorsFilter.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Sep 19, 2018 1:05:41 PM)</a> &gt; <a href="../../index.html" class="el_group">skillapi</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.fsdfinal.skillapi</a> &gt; <span class="el_source">CorsFilter.java</span></div><h1>CorsFilter.java</h1><pre class="source lang-java linenums">package com.fsdfinal.skillapi;
+
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
+<span class="nc" id="L17">public class CorsFilter extends OncePerRequestFilter {</span>
+
+        @Override
+        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+<span class="nc" id="L21">            response.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);</span>
+<span class="nc" id="L22">            response.setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;GET, POST, PUT, DELETE, OPTIONS&quot;);</span>
+<span class="nc" id="L23">            response.setHeader(&quot;Access-Control-Max-Age&quot;, &quot;3600&quot;);</span>
+<span class="nc" id="L24">            response.setHeader(&quot;Access-Control-Allow-Headers&quot;, &quot;authorization, content-type, xsrf-token&quot;);</span>
+<span class="nc" id="L25">            response.addHeader(&quot;Access-Control-Expose-Headers&quot;, &quot;xsrf-token&quot;);</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">            if (&quot;OPTIONS&quot;.equals(request.getMethod())) {</span>
+<span class="nc" id="L27">                response.setStatus(HttpServletResponse.SC_OK);</span>
+            } else {
+<span class="nc" id="L29">                filterChain.doFilter(request, response);</span>
+            }
+<span class="nc" id="L31">        }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span>java (Sep 19, 2018 1:05:41 PM)</div></body></html>

@@ -15,6 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -48,7 +53,9 @@ public class Skills implements Serializable {
 	 */
 	@OneToMany(mappedBy="skill")
 	@JsonIgnore
-	private Set<AssociateSkill> associateskills = new HashSet<AssociateSkill>();
+	 @NotFound(action=NotFoundAction.IGNORE)
+	 @Cascade({CascadeType.SAVE_UPDATE})
+	private Set<AssociateSkill> associateSkills = new HashSet<AssociateSkill>();
     
     public Skills(){}
 
@@ -93,18 +100,24 @@ public class Skills implements Serializable {
 	}
 
 	/**
-	 * @return the associateskills
+	 * @return the associateSkills
 	 */
-	public Set<AssociateSkill> getAssociateskills() {
-		return associateskills;
+	public Set<AssociateSkill> getAssociateSkills() {
+		return associateSkills;
 	}
 
 	/**
-	 * @param associateskills the associateskills to set
+	 * @param associateSkills the associateSkills to set
 	 */
-	public void setAssociateskills(Set<AssociateSkill> associateskills) {
-		this.associateskills = associateskills;
+	public void setAssociateSkills(Set<AssociateSkill> associateSkills) {
+
+		for(AssociateSkill associateSkill:associateSkills){
+			associateSkill.setSkill(this);
+		}
+		this.associateSkills = associateSkills;
 	}
+
+	 
  
 	
 }

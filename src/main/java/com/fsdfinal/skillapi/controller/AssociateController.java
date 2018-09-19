@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fsdfinal.skillapi.service.AssociateService;
+import com.fsdfinal.skillapi.to.SkillDashboardTO;
 import com.fsdfinal.skillapi.valueobject.Associate;
 
 /**
@@ -37,7 +38,17 @@ public class AssociateController {
  
 		return associates;
 	}
-	
+	/**
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.GET,value="/summary")
+	public SkillDashboardTO getAssociateSummary() 
+	{
+		SkillDashboardTO responseTO = new SkillDashboardTO();
+		responseTO = associateService.getAssociateSummary();
+ 
+		return responseTO;
+	}
 	/**
 	 * @param associateId
 	 * @return

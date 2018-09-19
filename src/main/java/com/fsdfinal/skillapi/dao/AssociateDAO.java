@@ -40,5 +40,10 @@ public interface AssociateDAO {
 	 * @param associate
 	 */
 	public void deleteAssociate(Associate associate);
-
+	
+	/**
+	 * Rated Candiates
+	 */
+     public List<Object[]> getRatedCandidates();
+     
 }
